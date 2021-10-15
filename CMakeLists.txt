@@ -6,5 +6,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("binary_addition")
 #add_subdirectory("get_sum")
 #add_subdirectory("count_bits")
+#add_subdirectory("printer_error")
 
-add_subdirectory("printer_error")
+add_subdirectory("odd_or_even")
+
