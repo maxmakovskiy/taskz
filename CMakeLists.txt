@@ -11,6 +11,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("roman_numerals_decoder")
 #add_subdirectory("sq_in_rect")
 #add_subdirectory("simple_encryption")
+#add_subdirectory("zeros_to_end")
 
-add_subdirectory("zeros_to_end")
+add_subdirectory("highest_scoring_word")
 
