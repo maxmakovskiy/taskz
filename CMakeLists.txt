@@ -10,6 +10,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("odd_or_even")
 #add_subdirectory("roman_numerals_decoder")
 #add_subdirectory("sq_in_rect")
+#add_subdirectory("simple_encryption")
 
-add_subdirectory("simple_encryption")
+add_subdirectory("zeros_to_end")
 
