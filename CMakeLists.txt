@@ -8,6 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("count_bits")
 #add_subdirectory("printer_error")
 #add_subdirectory("odd_or_even")
+#add_subdirectory("roman_numerals_decoder")
 
-add_subdirectory("roman_numerals_decoder")
+add_subdirectory("sq_in_rect")
 
