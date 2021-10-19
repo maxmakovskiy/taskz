@@ -12,6 +12,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("sq_in_rect")
 #add_subdirectory("simple_encryption")
 #add_subdirectory("zeros_to_end")
+#add_subdirectory("highest_scoring_word")
 
-add_subdirectory("highest_scoring_word")
+add_subdirectory("spin_greather_then_5")
 
