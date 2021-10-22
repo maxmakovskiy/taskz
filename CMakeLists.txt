@@ -15,5 +15,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("highest_scoring_word")
 #add_subdirectory("spin_greather_then_5")
 #add_subdirectory("valid_braces")
+#add_subdirectory("pig_it")
+add_subdirectory("avrg_temperature")
 
-add_subdirectory("pig_it")
