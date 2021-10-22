@@ -17,6 +17,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("valid_braces")
 #add_subdirectory("pig_it")
 #add_subdirectory("avrg_temperature")
+#add_subdirectory("people_queue")
 
-add_subdirectory("people_queue")
+add_subdirectory("anagrams")
 
