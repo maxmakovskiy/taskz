@@ -22,5 +22,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("bus_stops")
 #add_subdirectory("unique_strings")
 #add_subdirectory("sinonyms")
+#add_subdirectory("sort_bypass_register")
 
-add_subdirectory("sort_bypass_register")
+add_subdirectory("sorted_strings_klass")
+
