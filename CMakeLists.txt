@@ -19,5 +19,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("avrg_temperature")
 #add_subdirectory("people_queue")
 #add_subdirectory("anagrams")
-add_subdirectory("bus_stops")
+#add_subdirectory("bus_stops")
+
+add_subdirectory("unique_strings")
 
