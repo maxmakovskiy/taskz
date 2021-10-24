@@ -24,5 +24,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("sinonyms")
 #add_subdirectory("sort_bypass_register")
 #add_subdirectory("sorted_strings_klass")
-add_subdirectory("names_klass")
+#add_subdirectory("names_klass")
 
+add_subdirectory("klass_function")
