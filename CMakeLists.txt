@@ -28,5 +28,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("klass_function")
 #add_subdirectory("klass_function_advanced")
 #add_subdirectory("rational_numbers")
+#add_subdirectory("rational_numbers_advanced")
 
-add_subdirectory("rational_numbers_advanced")
+add_subdirectory("matrix")
