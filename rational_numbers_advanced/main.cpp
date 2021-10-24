@@ -1,6 +1,9 @@
 #include <iostream>
 #include <numeric>
 #include <sstream>
+#include <map>
+#include <set>
+#include <vector>
 using namespace std;
 
 class Rational {
@@ -88,6 +91,7 @@ ostream& operator<<(ostream& os, const Rational& number)
 istream& operator>>(istream& is, Rational& number)
 {
     if (is.eof()) return is;
+
     int numerator, denominator;
     is >> numerator;
     is.ignore(1);
@@ -95,6 +99,18 @@ istream& operator>>(istream& is, Rational& number)
     number = {numerator, denominator};
 
     return is;
+}
+
+bool operator<(const Rational& lhs, const Rational& rhs)
+{
+    if (lhs.Denominator() != rhs.Denominator())
+    {
+        int nod_lhsNumer = lhs.Numerator() * rhs.Denominator();
+        int nod_rhsNumer = rhs.Numerator() * lhs.Denominator();
+        return nod_lhsNumer < nod_rhsNumer;
+    }
+
+    return lhs.Numerator() < rhs.Numerator();
 }
 
 int main() {
@@ -201,6 +217,35 @@ int main() {
         }
     }
 
+    {
+        const set<Rational> rs = {{1, 2}, {1, 25}, {3, 4}, {3, 4}, {1, 2}};
+        if (rs.size() != 3) {
+            cout << "Wrong amount of items in the set" << endl;
+            return 1;
+        }
+
+        vector<Rational> v;
+        for (auto x : rs) {
+            v.push_back(x);
+        }
+        if (v != vector<Rational>{{1, 25}, {1, 2}, {3, 4}}) {
+            cout << "Rationals comparison works incorrectly" << endl;
+            return 2;
+        }
+    }
+
+    {
+        map<Rational, int> count;
+        ++count[{1, 2}];
+        ++count[{1, 2}];
+
+        ++count[{2, 3}];
+
+        if (count.size() != 2) {
+            cout << "Wrong amount of items in the map" << endl;
+            return 3;
+        }
+    }
  
     cout << "OK" << endl;
 
