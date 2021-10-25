@@ -31,5 +31,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("rational_numbers_advanced")
 #add_subdirectory("matrix")
 #add_subdirectory("int_type_blocks_weight")
+#add_subdirectory("regions_base")
 
-add_subdirectory("regions_base")
+add_subdirectory("team_tasks")
