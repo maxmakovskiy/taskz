@@ -36,5 +36,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("template_all_in_sqr")
 #add_subdirectory("get_ref_strict")
 #add_subdirectory("program_decomp")
+#add_subdirectory("basic_assertion_synonymns")
 
-add_subdirectory("basic_assertion_synonymns")
+add_subdirectory("rational_tests")
