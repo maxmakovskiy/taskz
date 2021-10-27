@@ -34,5 +34,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("regions_base")
 #add_subdirectory("team_tasks")
 #add_subdirectory("template_all_in_sqr")
+#add_subdirectory("get_ref_strict")
+#add_subdirectory("program_decomp")
 
-add_subdirectory("get_ref_strict")
+add_subdirectory("basic_assertion_synonymns")
