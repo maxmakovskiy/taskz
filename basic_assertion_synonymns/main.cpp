@@ -13,7 +13,7 @@ public:
     void AddNewPair(const std::string& word1, const std::string& word2)
     {
         synonymns[word1].insert(word2);
-//        synonymns[word2].insert(word1);
+//        synonymns[word2].insert(word1); // right solution
 
         // example for checking unit-testing
         synonymns[word2].insert(word2);
@@ -108,18 +108,43 @@ void Assert(bool b, const std::string& hint)
     AssertEqual(b, true, hint);
 }
 
-template <typename TestFunc>
-void RunTest(TestFunc func, const std::string& testName)
+class TestRunner
 {
-    try
+public:
+    TestRunner()
     {
-        func();
+        errorCounter = 0; 
     }
-    catch (std::runtime_error& e)
+
+    ~TestRunner()
     {
-        std::cout << testName << " fail: " << e.what() << std::endl;
+        if (errorCounter > 0)
+        {
+            std::cerr << errorCounter << " test failed. Terminate" << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
-}
+
+    template <typename TestFunc>
+    void RunTest(TestFunc func, const std::string& testName)
+    {
+        try
+        {
+            func();
+            std::cerr << testName << " OK" << std::endl;
+        }
+        catch (std::runtime_error& e)
+        {
+            errorCounter++;
+            std::cerr << testName << " fail: " << e.what() << std::endl;
+        }
+    }
+
+private:
+    int errorCounter;
+};
+
+
 
 void TestAddNewPair()
 {
@@ -137,8 +162,6 @@ void TestAddNewPair()
     };
         
     AssertEqual(manager.GetAll(), expected, "Add new pairs to empty dictionary");
-    
-    std::cout << "AddNewPair OK" << std::endl;
 }
 
 void TestSynonymnCountByWord()
@@ -154,8 +177,6 @@ void TestSynonymnCountByWord()
     AssertEqual(manager.SynonymnCountByWord("word3"), 2u, "SynonymnCountByWord(word3)");
     AssertEqual(manager.SynonymnCountByWord("word4"), 1u, "SynonymnCountByWord(word4)");
     AssertEqual(manager.SynonymnCountByWord("word5"), 0u, "SynonymnCountByWord(word5)");
-
-    std::cout << "SynonymnsCountByWord OK" << std::endl;
 }
 
 void TestAreSynonymns()
@@ -171,17 +192,20 @@ void TestAreSynonymns()
     Assert(manager.AreSynonymns("word2", "word4"), "word2 is synonymn for word4");
     Assert(!manager.AreSynonymns("word3", "word4"), "word2 is not synonymn for word4");
 
+}
 
-    std::cout << "TestAreSynonymns OK" << std::endl;
+void AllTests()
+{
+    TestRunner runner;
+    runner.RunTest(TestAddNewPair, "TestAddNewPair");
+    runner.RunTest(TestSynonymnCountByWord, "TestSynonymnCountByWord");
+    runner.RunTest(TestAreSynonymns, "TestAreSynonymns");
 }
 
 int main()
 {
-    RunTest(TestAddNewPair, "TestAddNewPair");
-    RunTest(TestSynonymnCountByWord, "TestSynonymnCountByWord");
-    RunTest(TestAreSynonymns, "TestAreSynonymns");
+    AllTests();
 
-/*
     SynonymnsManager manager;
 
     int n;
@@ -218,7 +242,6 @@ int main()
                 std::cout << "NO" << std::endl;
         }
     }
-*/
 
     return 0;
 }
