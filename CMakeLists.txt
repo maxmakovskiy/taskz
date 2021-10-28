@@ -37,5 +37,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("get_ref_strict")
 #add_subdirectory("program_decomp")
 #add_subdirectory("basic_assertion_synonymns")
+#add_subdirectory("rational_tests")
 
-add_subdirectory("rational_tests")
+add_subdirectory("is_palindrom_tests")
