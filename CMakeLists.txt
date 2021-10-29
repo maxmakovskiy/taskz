@@ -44,5 +44,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("print_vector_part_iterator")
 #add_subdirectory("find_element_in_set_iterator")
 #add_subdirectory("demograph_iterator")
+#add_subdirectory("remove_dubs_iterator")
 
-add_subdirectory("remove_dubs_iterator")
+add_subdirectory("number_permutation")
