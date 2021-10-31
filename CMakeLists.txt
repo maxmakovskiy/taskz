@@ -47,5 +47,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("remove_dubs_iterator")
 #add_subdirectory("number_permutation")
 #add_subdirectory("merge_sort1")
+#add_subdirectory("merge_sort2")
 
-add_subdirectory("merge_sort2")
+add_subdirectory("personal_budget")
