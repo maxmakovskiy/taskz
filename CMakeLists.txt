@@ -52,5 +52,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("personal_budget_plus")
 #add_subdirectory("names_klass_1")
 #add_subdirectory("names_klass_2")
+#add_subdirectory("names_klass_3")
 
-add_subdirectory("names_klass_3")
+add_subdirectory("find_nearest_element")
