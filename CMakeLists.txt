@@ -58,5 +58,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("find_start_with_2")
 #add_subdirectory("build_arithmetic_expression")
 #add_subdirectory("notifier")
+#add_subdirectory("figure_set")
 
-add_subdirectory("figure_set")
+add_subdirectory("events_bd")
