@@ -59,7 +59,8 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("build_arithmetic_expression")
 #add_subdirectory("notifier")
 #add_subdirectory("figure_set")
+#add_subdirectory("events_db")
 
-add_subdirectory("events_db")
+add_subdirectory("simple_parser")
 
 
