@@ -131,6 +131,6 @@ private:
     Assert(x, os.str());                \
 }
 
-
+#define RUN_TEST(tr, func) tr.RunTest(func, #func)
 
 

@@ -61,6 +61,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("figure_set")
 #add_subdirectory("events_db")
 #add_subdirectory("simple_parser")
+#add_subdirectory("max_element_by_predicate")
 
-add_subdirectory("max_element_by_predicate")
+add_subdirectory("logger")
 
