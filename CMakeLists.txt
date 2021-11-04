@@ -60,4 +60,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("notifier")
 #add_subdirectory("figure_set")
 
-add_subdirectory("events_bd")
+add_subdirectory("events_db")
+
+
