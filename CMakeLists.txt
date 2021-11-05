@@ -63,6 +63,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("simple_parser")
 #add_subdirectory("max_element_by_predicate")
 #add_subdirectory("logger")
+#add_subdirectory("uniq_id_macro")
 
-add_subdirectory("uniq_id_macro")
+add_subdirectory("comparators_generator")
 
