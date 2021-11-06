@@ -1,84 +1,95 @@
 #include "test.h"
 #include <vector>
+#include <stdexcept>
 
 template <typename T>
 class Deque
 {
 public:
     Deque()
-        : elementsNumber(0)
     {
     }
     
     bool Empty() const
     {
-        return data.empty();
+        return head.empty() && tail.empty();
     }
 
     size_t Size() const
     {
-        return elementsNumber;
+        return head.size() + tail.size();
     }
 
     // without bound checking
     const T& operator[](size_t idx) const
     {
-        return data.at(idx);
+        return at(idx);
     } 
 
     T& operator[](size_t idx)
     {
-        return data[idx];
+        return at(idx);
     }
 
     // bound checking
     // if idx > size()-1 then throw out_of_range exception
     const T& At(size_t idx) const
     {
-        return data.at(idx);
+        checkIndex(idx);
+        return at(idx);
     } 
 
     T& At(size_t idx)
     {
-        return data.at(idx);
+        checkIndex(idx);
+        return at(idx);
     }
 
     const T& Front() const
     {
-        return data.front();
+        return head.empty() ? tail.front() : head.back();
     }
     
     T& Front()
     {
-        return data.front();
+        return head.empty() ? tail.front() : head.back();
     }
 
     const T& Back() const
     {
-        return data.back();
+        return tail.empty() ? head.front() : tail.back();
     }
 
     T& Back()
     {
-        return data.back();
+        return tail.empty() ? head.front() : tail.back();
     }
     
     void PushBack(T val)
     {
-        elementsNumber++;
-        data.push_back(val);
+        tail.push_back(val);
     }
 
     void PushFront(T val)
     {
-        elementsNumber++;
-        data.insert(data.begin(), val);
+        head.push_back(val);
     }
 
 private:
-    size_t elementsNumber;
-    std::vector<T> data;
+//  |(back)    head    (front)|(front)    tail    (back)|
+    std::vector<T> head, tail;
+
+    void checkIndex(size_t idx) const
+    {
+        if (idx >= Size()) throw std::out_of_range("Index is out of range");
+    }
     
+    T& at(size_t idx)
+    {
+        return idx < head.size() 
+            ? head[head.size()-1-idx] : tail[idx-head.size()];
+    }
+
 };
 
 void TestDeque()
