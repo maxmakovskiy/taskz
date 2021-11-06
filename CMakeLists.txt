@@ -66,6 +66,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("uniq_id_macro")
 #add_subdirectory("comparators_generator")
 #add_subdirectory("update_airline_ticket")
+#add_subdirectory("table_klass")
 
-add_subdirectory("table_klass")
+add_subdirectory("deque_template")
 
