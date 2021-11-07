@@ -7,6 +7,12 @@ struct IteratorRange
     Iterator first;
     Iterator last;
 
+    IteratorRange(Iterator first, Iterator last)
+    {
+        this->first = first;
+        this->last = last;
+    }
+
     Iterator begin() const
     {
         return first;
@@ -35,6 +41,12 @@ IteratorRange<typename std::vector<T>::iterator> Head(
     };
 }
 
+template <typename Iterator>
+IteratorRange<Iterator> make_range(Iterator begin, Iterator end)
+{
+    return IteratorRange<Iterator>(begin, end);
+}
+
 int main()
 {
     std::vector<int> v = {1, 2, 3, 4, 5};
@@ -50,8 +62,13 @@ int main()
 
     std::cout << std::endl;
     
-    std::cout << "Range size = " << RangeSize(Head(v, 3)) << std::endl;
+    auto second_half = make_range(v.begin() + v.size() / 2, v.end());
+    for (int x : second_half)
+    {
+        std::cout << x << ' '; 
+    }
 
+    std::cout << std::endl;
 
     return 0;
 }
