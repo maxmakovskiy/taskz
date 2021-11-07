@@ -68,7 +68,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("update_airline_ticket")
 #add_subdirectory("table_klass")
 #add_subdirectory("deque_template")
-#add_subdirectory("paginator")
-
-add_subdirectory("range_iterator")
+add_subdirectory("paginator")
+#add_subdirectory("range_iterator")
 
