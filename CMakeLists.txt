@@ -70,6 +70,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("deque_template")
 #add_subdirectory("paginator")
 #add_subdirectory("range_iterator")
+#add_subdirectory("merge_sort1_profiler")
 
-add_subdirectory("merge_sort1_profiler")
+add_subdirectory("students_sort_optimization")
 
