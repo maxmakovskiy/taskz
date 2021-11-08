@@ -4,7 +4,6 @@
 
 #include <algorithm>
 
-//Оптимизируйте эту функцию
 bool Compare(const Student& first, const Student& second) {
     return first > second;
 }
@@ -34,7 +33,7 @@ void TestComparison() {
     10.0
   };
   {
-    LOG_DURATION("Compare(guru, newbie)");
+    LOG_DURATION_MICROSECONDS("Compare(guru, newbie)");
     ASSERT(Compare(guru, newbie));
   }
 
@@ -52,7 +51,7 @@ void TestSorting() {
     };
 
     {
-        LOG_DURATION("sort");
+        LOG_DURATION_NANOSECONDS("sort");
         std::sort(students.begin(), students.end(), Compare);
     }
 
