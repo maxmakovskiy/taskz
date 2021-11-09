@@ -73,6 +73,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("merge_sort1_profiler")
 #add_subdirectory("students_sort_optimization")
 #add_subdirectory("lang_learner_optimization")
+#add_subdirectory("expresses_algorithm_optimization")
 
-add_subdirectory("expresses_algorithm_optimization")
+add_subdirectory("booking_algorithm_optimized")
 
