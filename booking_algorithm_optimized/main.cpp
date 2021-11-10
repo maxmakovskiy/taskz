@@ -22,37 +22,34 @@ public:
         Adjust(q.time);
         
         base.push_back(q);
+        hotelToClient[q.hotel_name]++;
+        hotelToRooms[q.hotel_name] += q.room_count;
     }
 
     int ClientsNumberIn(const std::string& hotelName)
     {
-        int result = 0;
-        for (const auto& item : base) {
-           if (item.hotel_name == hotelName) result++; 
-        }
-        
-        return result;
+        return hotelToClient[hotelName];
     }
 
     int BookedRoomsIn(const std::string& hotelName)
     {
-        int result = 0;
-        for (const auto& item : base) {
-           if (item.hotel_name == hotelName) result += item.room_count; 
-        }
-
-        return result;
+        return hotelToRooms[hotelName];
     }
 
 private:
     std::deque<Query> base;
     const int64_t SECONDS_IN_DAY = 86400;
+    std::map<std::string, int> hotelToRooms;
+    std::map<std::string, int> hotelToClient;
 
     void Adjust(const int64_t& time)
     {
         while (!base.empty() &&
                  (base.front().time <= time-SECONDS_IN_DAY))
         {
+            auto temp = base.front();
+            hotelToClient[temp.hotel_name]--;
+            hotelToRooms[temp.hotel_name] -= temp.room_count;
             base.pop_front();
         }
 
@@ -95,7 +92,7 @@ void TestCorrectness2()
 
 void TestBench()
 {
-    const uint32_t COUNT = 100000;
+    const uint32_t COUNT = 1000000;
     BookingManager manager;
     
     {
