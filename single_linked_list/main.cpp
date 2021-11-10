@@ -14,12 +14,17 @@ public:
 
     ~LinkedList()
     {
+        while (head) {
+            PopFront();
+        }
+/*
         for (Node* iter = head; iter;)
         {
             Node* toRemove = iter;
             iter = iter->next;
             delete toRemove;
         }
+*/
     }
 
     void PushFront(const T& value)
@@ -32,38 +37,35 @@ public:
 
     void InsertAfter(Node* node, const T& value)
     {
-        Node* after = head;
-        for (; after; after = after->next)
-        {
-            if (after == node) break;
+        if (node) {
+            Node* newNode = new Node;
+            newNode->value = value;
+            newNode->next = node->next;
+            node->next = newNode; 
+        } else {
+            PushFront(value);
         }
-
-        Node* newNode = new Node;
-        newNode->value = value;
-        newNode->next = after->next;
-        after->next = newNode;
     }
 
     void RemoveAfter(Node* node)
     {
-        Node* after = head;
-        for (; after; after = after->next) 
-        {
-            if (after == node) break;
+        if (node->next) {
+            Node* toRemove = node->next;
+            node->next = toRemove->next;
+            delete toRemove; 
+        } else if (!node) {
+            PopFront();
         }
-        
-        Node* toRemove = after->next;
-        after->next = toRemove->next;
-
-        delete toRemove; 
     }
 
 
     void PopFront()
     {
-        Node* current = head;
-        head = head->next;
-        delete current;
+        if (head) {
+            Node* current = head;
+            head = head->next;
+            delete current;
+        }
     }
 
     Node* GetHead() { return head; }
