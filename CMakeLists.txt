@@ -75,5 +75,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("lang_learner_optimization")
 #add_subdirectory("expresses_algorithm_optimization")
 #add_subdirectory("booking_algorithm_optimized")
+#add_subdirectory("swap_sort_copy")
 
-add_subdirectory("swap_sort_copy")
+add_subdirectory("single_linked_list")
+
