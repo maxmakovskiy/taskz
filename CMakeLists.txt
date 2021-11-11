@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.8)
 project("taskz" LANGUAGES CXX VERSION 0.0.1)
-set(CMAKE_BUILD_TYPE Debug)
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CSS_FLAGS_DEBUG "-g")
+set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 
 # Completed katas
 #add_subdirectory("binary_addition")
@@ -78,5 +85,7 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("swap_sort_copy")
 #add_subdirectory("single_linked_list")
 #add_subdirectory("own_vector")
+#add_subdirectory("objects_pool")
 
-add_subdirectory("objects_pool")
+
+add_subdirectory("stack_vector")
