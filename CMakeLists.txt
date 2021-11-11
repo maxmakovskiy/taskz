@@ -86,6 +86,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("single_linked_list")
 #add_subdirectory("own_vector")
 #add_subdirectory("objects_pool")
+#add_subdirectory("stack_vector")
 
-
-add_subdirectory("stack_vector")
+add_subdirectory("translator")
