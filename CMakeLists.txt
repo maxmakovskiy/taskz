@@ -77,5 +77,6 @@ set(CMAKE_BUILD_TYPE Debug)
 #add_subdirectory("booking_algorithm_optimized")
 #add_subdirectory("swap_sort_copy")
 #add_subdirectory("single_linked_list")
+#add_subdirectory("own_vector")
 
-add_subdirectory("own_vector")
+add_subdirectory("objects_pool")
