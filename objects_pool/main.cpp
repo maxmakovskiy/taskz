@@ -39,18 +39,20 @@ public:
 
     void Deallocate(T* object)
     {
-        auto pos = allocatedObjects.find(object);
-        if (pos == allocatedObjects.end()) { 
+        if (allocatedObjects.find(object) == allocatedObjects.end()) { 
             throw std::invalid_argument("object doesn't exist in pool");
         }
 
-        freeObjects.push(*pos);
-        allocatedObjects.erase(pos);
+        // using pointer as iterator
+        freeObjects.push(object);
+        allocatedObjects.erase(object);
     }
 
     ~ObjectPool()
     {
-        for (auto& element : allocatedObjects) { delete element; }
+        for (auto element : allocatedObjects) { 
+            delete element; 
+        }
         
         while(!freeObjects.empty()) {
             T* temp = freeObjects.front();
