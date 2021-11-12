@@ -88,5 +88,7 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("objects_pool")
 #add_subdirectory("stack_vector")
 #add_subdirectory("translator")
+#add_subdirectory("airport_counter")
 
-add_subdirectory("airport_counter")
+
+add_subdirectory("web_server_stats")
