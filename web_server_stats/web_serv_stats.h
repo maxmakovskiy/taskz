@@ -67,23 +67,24 @@ private:
     std::map<std::string_view, int> uriCount;
 };
 
+std::string_view ReadToken(std::string_view& source)
+{
+    auto space_pos = source.find(' ');
+    auto toReturn = source.substr(0, space_pos);
+    source.remove_prefix(space_pos + 1);
+    return toReturn;
+}
+
 // line - string_view to string like "GET /order HTTP/1.1"
 HttpRequest ParseRequest(std::string_view line)
 {
+    // skip empty space before first character
     line.remove_prefix(line.find_first_not_of(' '));
 
     HttpRequest result;
-
-    size_t space_pos = line.find(' ');
-    result.method = line.substr(0, space_pos);
-
-    line.remove_prefix(space_pos + 1);
-    space_pos = line.find(' ');
-    result.uri = line.substr(0, space_pos); 
-        
-    line.remove_prefix(space_pos + 1);
-    space_pos = line.find(' ');
-    result.protocol = line.substr(0, space_pos); 
+    result.method = ReadToken(line);
+    result.uri = ReadToken(line);
+    result.protocol = ReadToken(line);
 
     return result;
 }
