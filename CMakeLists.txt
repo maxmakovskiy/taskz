@@ -90,6 +90,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("translator")
 #add_subdirectory("airport_counter")
 #add_subdirectory("web_server_stats")
+#add_subdirectory("text_editor")
 
-
-add_subdirectory("text_editor")
+add_subdirectory("move_sems_in_simple_vector")
