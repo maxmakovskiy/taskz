@@ -18,25 +18,26 @@ public:
     
     SimpleVector(const SimpleVector& other)
     {
-        this->size = other.size;
-        this->capacity = other.capacity;
+        size = other.size;
+        capacity = other.capacity;
 
-        data = new T[this->capacity];
-        std::copy(other.begin(), other.end(), this->begin());
+        data = new T[capacity];
+        std::copy(other.begin(), other.end(), begin());
     }
 
-    const SimpleVector& operator=(const SimpleVector& other)
+    void operator=(const SimpleVector& other)
     {
-        this->size = other.size;
-        this->capacity = other.capacity;
-        delete[] data;
-        data = new T[this->capacity];
-
-        for (size_t i = 0; i < size; i++) {
-            data[i] = other[i];
+        if (other.size <= capacity) {
+            std::copy(other.begin(), other.end(), begin());
+            size = other.size;
+        } else {
+            // Copy-And-Swap
+           
+            SimpleVector<T> temporary(other);
+            std::swap(temporary.data, data); 
+            std::swap(temporary.size, size); 
+            std::swap(temporary.capacity, capacity); 
         }
-
-        return *this;
     }
    
     ~SimpleVector()
@@ -48,11 +49,12 @@ public:
     const T& operator[](size_t index) const { return *(data + index); }
 
     T* begin() { return data; }
-
     T* end() { return (data + size); }
 
-    size_t Size() const { return size; }
+    const T* begin() const { return data; }
+    const T* end() const { return (data + size); }
 
+    size_t Size() const { return size; }
     size_t Capacity() const { return capacity; }
 
     void PushBack(const T& value)
