@@ -23,9 +23,6 @@ public:
         return nextId++;
     }
 
-    // Добавить все элементы диапазона [range_begin, range_end)
-    // с помощью перемещения, записав выданные им идентификаторы
-    // в диапазон [ids_begin, ...)
     template <typename ObjInputIt, typename IdOutputIt>
     void Add(ObjInputIt range_begin, ObjInputIt range_end,
            IdOutputIt ids_begin)
@@ -98,7 +95,7 @@ private:
 
 class StringNonCopyable : public string {
 public:
-  using string::string;  // Позволяет использовать конструкторы строки
+  using string::string; 
   StringNonCopyable(const StringNonCopyable&) = delete;
   StringNonCopyable(StringNonCopyable&&) = default;
   StringNonCopyable& operator=(const StringNonCopyable&) = delete;
