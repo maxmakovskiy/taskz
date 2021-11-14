@@ -60,7 +60,7 @@ public:
                     return i1.second.priority < i2.second.priority;
                 });
 
-        return {std::move(maxElement->second.element),
+        return {maxElement->second.element,
                 maxElement->second.priority};
     }
 
