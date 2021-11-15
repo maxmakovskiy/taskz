@@ -15,7 +15,6 @@ public:
     {
         std::lock_guard<std::mutex> guard;
         T& ref_to_value;
-
     };
 
     Access GetAccess()
