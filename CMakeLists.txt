@@ -95,5 +95,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("assigment_copy_vector")
 #add_subdirectory("strings_groups")
 #add_subdirectory("priority_collection")
+#add_subdirectory("split_into_sentences")
 
-add_subdirectory("split_into_sentences")
+add_subdirectory("merge_sort3")
