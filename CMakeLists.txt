@@ -98,5 +98,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("split_into_sentences")
 #add_subdirectory("merge_sort3")
 #add_subdirectory("josephus_permutation")
+#add_subdirectory("matrix_sum_mutlithreading")
 
-add_subdirectory("matrix_sum_mutlithreading")
+add_subdirectory("synchronized")
