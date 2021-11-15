@@ -12,6 +12,7 @@ public:
     {
         this->first = first;
         this->last = last;
+        length = std::distance(first, last);
     }
 
     Iterator begin() const
@@ -26,12 +27,13 @@ public:
 
     size_t size() const
     {
-        return last - first;
+        return length;
     }
 
 private:
     Iterator first;
     Iterator last;
+    size_t length;
 };
 
 template <typename Iterator>
@@ -42,12 +44,9 @@ public:
         , mEnd(end)
         , page_size(page_size)
     {
-        page_count = (end - begin) / page_size;
-        if ((end-begin) % page_size != 0) page_count++;
-        
         slice();
     }
-    
+
     auto begin() const
     {
         return pages.begin();
@@ -60,7 +59,7 @@ public:
 
     size_t size() const
     {
-        return page_count;
+        return pages.size();
     }
 
 
@@ -73,23 +72,15 @@ private:
 
     void slice()
     {
-        auto first = mBegin;
-        auto last = mBegin + page_size;
+        for (size_t remained = std::distance(mBegin, mEnd); remained > 0;) {
+            size_t currentPageSize = std::min(page_size, remained);
+            auto currentEnd = std::next(mBegin, currentPageSize);
 
-        for (size_t i = 0; i < page_count; i++)
-        {
-            pages.push_back(Page(first, last));
-            first = last;
+            pages.push_back(Page(mBegin, currentEnd));
             
-            if (last + page_size > mEnd)
-            {
-                last += (mEnd-mBegin) - ((static_cast<int>(i) + 1) * page_size);
-                continue;
-            }
-
-            last += page_size;
+            remained -= currentPageSize;
+            mBegin = currentEnd;
         }
-
     }
 };
 

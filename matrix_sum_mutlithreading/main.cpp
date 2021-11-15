@@ -1,25 +1,32 @@
 #include "test.h"
+#include "profiler.h"
 #include "paginate.h"
 #include <vector>
 #include <future>
 #include <cstdint>
 #include <algorithm>
 
-int64_t CalculateMatrixSum(const std::vector<std::vector<int>>& matrix) 
+template <typename ContainerOfVectors>
+int64_t SumOfPartOfMatrix(const ContainerOfVectors& matrix) {
+  int64_t sum = 0;
+  for (const auto& row : matrix) {
+    for (auto item : row) {
+      sum += item;
+    }
+  }
+  return sum;
+}
+
+int64_t
+CalculateMatrixSum
+(const std::vector<std::vector<int>>& matrix, size_t page_size) 
 {
     int64_t result = 0;
-    size_t page_size = 2;
     
-    std::vector<std::future<int>> fs;
+    std::vector<std::future<int64_t>> fs;
+
     for (const auto& page : Paginate(matrix, page_size)) {
-        for (const auto& row : page) {
-//            result += std::accumulate(row.begin(), row.end(), 0);
-            fs.push_back(std::async(
-                    std::launch::async,
-                    [&row] { 
-                        return std::accumulate(row.begin(), row.end(), 0);
-                    }));
-        }
+        fs.push_back(std::async([=]{ return SumOfPartOfMatrix(page); }));
     }
 
     for (auto& f : fs) {
@@ -36,13 +43,31 @@ void TestCalculateMatrixSum()
     {9, 10, 11, 12},
     {13, 14, 15, 16}
   };
-  ASSERT_EQUAL(CalculateMatrixSum(matrix), 136);
+  ASSERT_EQUAL(CalculateMatrixSum(matrix, 2), 136);
+//  ASSERT_EQUAL(CalculateMatrixSum(matrix), 136);
+}
+
+void TestBench()
+{
+    std::vector<std::vector<int>> matrix(9000);
+    for (auto& v : matrix) {
+        v.resize(100);
+        std::iota(v.begin(), v.end(), 1);
+    } 
+
+    {
+        LOG_DURATION_MILLISECONDS("9000 x 100 matrix sum");
+        CalculateMatrixSum(matrix, 300);
+//        CalculateMatrixSum(matrix);
+    }
+
 }
 
 int main() 
 {
     TestRunner tr;
     RUN_TEST(tr, TestCalculateMatrixSum);
+    RUN_TEST(tr, TestBench);
 
     return 0;
 }
