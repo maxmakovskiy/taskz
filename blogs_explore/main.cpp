@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <future>
+#include <iterator>
 #include <functional>
 
 using namespace std;
@@ -41,18 +42,44 @@ std::vector<std::string_view> slice(string_view source)
     return result;
 }
 
+/*
+vector<string> split(const string& source)
+{
+    istringstream iss(source);
+    return { istream_iterator<string>(iss), istream_iterator<string>() };
+}
+*/
+
 Stats
 ExploreLine
 (const set<string>& key_words, const string& line) 
 {
     Stats s;
-    vector<string_view> words = slice(line);
-    
-    for (const string_view& word : words) {
+/*     
+    for (const auto& word : split(line)) {
+        if (key_words.count(word) > 0) {
+            s.word_frequences[word]++;
+        }
+    }
+*/   
+    for (const string_view& word : slice(line)) {
         string temp(word.begin(), word.end());
         if (key_words.count(temp) > 0) {
             s.word_frequences[std::string(word)]++;
         }
+    }
+
+    return s;
+}
+
+Stats
+ExploreBatch
+(const set<string>& key_words, vector<string> batch) 
+{
+    Stats s;
+    
+    for (const string& line : batch) {
+        s += ExploreLine(key_words, line);
     }
 
     return s;
@@ -76,8 +103,27 @@ ExploreKeyWords
     vector<future<Stats>> fs;
     Stats result;
     
+
+    vector<string> batch;
+    size_t batchSize = 700;
+    batch.reserve(batchSize);
+
     for (string line; getline(input, line);) {
-        fs.push_back(async(ExploreLine, ref(key_words), line)); 
+        batch.push_back(move(line));
+        if (batch.size() >= batchSize) {
+            // need to make move 
+            // cause next step is .clear()
+            // and current thread doesn't compute stats
+            // and OS scheduler switch evaluation to another process
+            fs.push_back(async(ExploreBatch, ref(key_words), move(batch))); 
+            batch.clear();
+        }
+    }
+
+    // if lineCount % batchSize != 0
+    // then batch has unprocessed elements
+    if (!batch.empty()) {
+        result += ExploreBatch(key_words, move(batch));
     }
     
     for (auto& f : fs) {
@@ -161,6 +207,31 @@ void TestSingleThread()
 
 void TestMultiThread()
 {
+  const set<string> key_words = {"yangle", "rocks", "sucks", "all"};
+
+  stringstream ss;
+
+  for (int i = 0; i < 1000; i++) {
+      ss << "this new yangle service really rocks\n";
+      ss << "It sucks when yangle isn't available\n";
+      ss << "10 reasons why yangle is the best IT company\n";
+      ss << "yangle rocks others suck\n";
+      ss << "Goondex really sucks, but yangle rocks. Use yangle\n";
+  }
+
+  Stats stats;
+  {
+    LOG_DURATION_MILLISECONDS("Multithreads");
+    stats = ExploreKeyWords(key_words, ss);
+  }
+
+  const map<string, int> expected = {
+    {"yangle", 6000},
+    {"rocks", 2000},
+    {"sucks", 1000}
+  };
+
+  ASSERT_EQUAL(stats.word_frequences, expected);
 
 }
 
@@ -171,11 +242,7 @@ int main()
   RUN_TEST(tr, TestSlice);
   RUN_TEST(tr, TestExploreLine);
   RUN_TEST(tr, TestSingleThread);
-
-  {
-    LOG_DURATION_MICROSECONDS("TestBasic");
-    RUN_TEST(tr, TestMultiThread);
-  }
+  RUN_TEST(tr, TestMultiThread);
 
   return 0;
 }
