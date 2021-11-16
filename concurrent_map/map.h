@@ -1,11 +1,19 @@
 #pragma once
 #include <mutex>
 
+template <typename T>
+T abs(T val) 
+{
+    return val < 0 ? -val : val;
+}
+
+
 template <typename K, typename V>
 class ConcurrentMap 
 {
 public:
-    static_assert(std::is_integral_v<K>, "ConcurrentMap supports only integer keys");
+    static_assert(std::is_integral_v<K>,
+            "ConcurrentMap supports only integer keys");
 
     struct Access 
     {
@@ -24,13 +32,7 @@ public:
        
         // if element with given key doesn't exist in any bucket
         // then we write them to first backet
-        size_t bucket_idx = 0;
-
-        for (size_t i = 0; i < base.size(); i++) {
-            if (base[i].find(key) != base[i].end()) {
-                bucket_idx = i;
-            }
-        }
+        size_t bucket_idx = abs(key) % base.size();
         
         return { std::lock_guard<std::mutex>(m), base[bucket_idx][key]};
     }
