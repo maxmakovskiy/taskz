@@ -5,12 +5,14 @@
 void
 InvertedIndex::Add
 (const std::string& document)
-{
-    docs.push_back(document);
+{ // O(N)
+//    std::vector<std::string> words = splitToWords(document);
+//    docs.reserve(words.size());
     for (const std::string& word : splitToWords(document)) 
     {
         mappings[word].push_back(docId);
     }
+    docs.push_back(document);
     docId++;
 }
 
@@ -56,38 +58,35 @@ SearchServer::AddQueriesStream
     std::vector<QueryResult> qResults;
 
     // Make mapping document id to relevant hit 
-    std::map<size_t, size_t> hitcounter;
+    std::vector<size_t> hits(base.GetAllDocs().size()); // id = index
     for (const std::string& word : queryContent) {
         for (size_t id : base.GetDocsIDs(word)) {
-            hitcounter[id]++;
+            hits[id]++;
         }
     }
 
     // Minimum 5 relevant docs for query
-    qResults.reserve(std::min(hitcounter.size(), static_cast<size_t>(5)));
-    std::vector<std::pair<size_t, size_t>> intermediate(hitcounter.begin(), hitcounter.end());
+    qResults.reserve(5);
    
-    // Sort existing results
-    std::sort(intermediate.begin(), 
-              intermediate.end(),
-              [] (const auto& p1, const auto& p2) {
-                    return p1.second < p2.second;
-              });
-    // Push results to more convinient representation
-    for (const auto& item : intermediate) {
-        qResults.push_back({ item.first, item.second });
-    }
+    for (int i = 0; i < 5; i++) {
+        auto currentMaxIt = std::max_element(hits.begin(), hits.end());
+        qResults.push_back({ std::distance(hits.begin(), currentMaxIt),
+                *currentMaxIt});
+        hits.erase(currentMaxIt);
+    } 
+
+    qResults.erase(std::remove_if(qResults.begin(), qResults.end(),
+            [](QueryResult& q) {
+                return q.hit_count == 0;
+            }), qResults.end());
 
     // Output formatting
     PrepareOutput(search_results_output, queryContent);
-    for (int i = 0; !qResults.empty(); i++)
+    for (size_t i = 0; i < qResults.size(); i++)
     {
         if (i != 0) search_results_output << " ";
-        search_results_output << qResults.back();
-        qResults.pop_back();
+        search_results_output << qResults[i];
     }
-
-    // the capital: {docid: 1, hitcount: 3} {docid: 0, hitcount: 2}
 }
 
 void

@@ -26,6 +26,11 @@ public:
         return docs[id];
     }
 
+    inline const std::vector<std::string>& GetAllDocs()
+    {
+        return docs;
+    }
+
     inline void Clear() 
     {
         docs.clear();

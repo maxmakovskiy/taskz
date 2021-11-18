@@ -73,7 +73,13 @@ void TestBench()
    
     istringstream inDocs;
     inDocs.str(ToString(docs));
-    SearchServer server(inDocs);
+
+    SearchServer server;
+    {
+        LOG_DURATION_MILLISECONDS("Time of update base with "
+                + to_string(MULTI) + " elements");
+        server.UpdateDocumentBase(inDocs);
+    }
     
     istringstream inQuery;
     inQuery.str(query);
