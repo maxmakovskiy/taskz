@@ -3,7 +3,7 @@
 
 using namespace std;
 
-std::string ToString(const vector<string> sources)
+string ToString(const vector<string> sources)
 {
     std::string result;
     
@@ -47,15 +47,51 @@ void TestBasicSearch() {
 
 }
 
+void TestBench()
+{
+    const vector<string> source = { // size = 8
+        "we are ready to go",
+        "come on everybody shake you hands",
+        "i love this game",
+        "tell me the meaning of being lonely",
+        "just keep track of it",
+        "how hard could it be",
+        "it is going to be legen wait for it dary legendary",
+        "we dont need no education"
+    };
+
+    vector<string> docs;
+    const int MULTI = 50000; 
+    for (int i = 0; i < MULTI; i++) {
+        std::for_each(source.begin(), source.end(),
+            [&docs](const string& s) {
+                docs.push_back(s);
+            });
+    }
+
+    const string query = "we need some help";
+   
+    istringstream inDocs;
+    inDocs.str(ToString(docs));
+    SearchServer server(inDocs);
+    
+    istringstream inQuery;
+    inQuery.str(query);
+
+    ostringstream out;
+    {
+        LOG_DURATION_MILLISECONDS("Bench: elements in base " 
+                + to_string(MULTI)
+                + "; time to work");
+        server.AddQueriesStream(inQuery, out);
+    }
+}
+
 int main() 
 {
     TestRunner tr;
-
-//  RUN_TEST(tr, TestSerpFormat);
-//  RUN_TEST(tr, TestTop5);
-//  RUN_TEST(tr, TestHitcount);
-//  RUN_TEST(tr, TestRanking);
     RUN_TEST(tr, TestBasicSearch);
+    RUN_TEST(tr, TestBench);
 
     return 0;
 }
