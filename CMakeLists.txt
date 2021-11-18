@@ -101,5 +101,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("matrix_sum_mutlithreading")
 #add_subdirectory("synchronized")
 #add_subdirectory("concurrent_map")
+#add_subdirectory("blogs_explore")
 
-add_subdirectory("blogs_explore")
+add_subdirectory("search_server")
