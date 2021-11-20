@@ -69,6 +69,16 @@ Node* Next(Node* me)
     return me->parent;
 }
 
+Node* search(Node* root, int val)
+{
+    if (root == nullptr || root->value == val) {
+        return root;
+    }
+
+    if (val < root->value) return search(root->left, val);
+    else return search(root->right, val);
+}
+
 void Test1() {
   NodeBuilder nb;
 
@@ -108,12 +118,32 @@ void TestRootOnly() {
   ASSERT( Next(root) == nullptr);
 };
 
+void TestSearch()
+{
+  NodeBuilder nb;
+  Node* root = nb.CreateRoot(50);
+  Node* l = nb.CreateLeftSon(root, 2);
+  nb.CreateLeftSon(l, 1);
+  Node* r = nb.CreateRightSon(l, 4);
+  nb.CreateLeftSon(r, 3);
+  nb.CreateRightSon(r, 5);
+  r = nb.CreateRightSon(root, 100);
+  l = nb.CreateLeftSon(r, 90);
+  nb.CreateRightSon(r, 101);
+  nb.CreateLeftSon(l, 89);
+  r = nb.CreateRightSon(l, 91);
+
+  ASSERT_EQUAL(search(root, 90), l);
+  ASSERT_EQUAL(search(root, 91), r);
+   
+}
 
 int main() 
 {
   TestRunner tr;
   RUN_TEST(tr, Test1);
   RUN_TEST(tr, TestRootOnly);
+  RUN_TEST(tr, TestSearch);
 
   return 0;
 }
