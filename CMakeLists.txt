@@ -103,5 +103,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("concurrent_map")
 #add_subdirectory("blogs_explore")
 #add_subdirectory("search_server")
+#add_subdirectory("point_to_h_set")
 
-add_subdirectory("point_to_h_set")
+add_subdirectory("through_bin_tree")
