@@ -59,36 +59,19 @@ public:
     template <typename Callback>
     void RangeByTimestamp(int low, int high, Callback callback) const
     { // [low, high]
-        for (auto& [key, value] : timeToRecord)
-        {
-            if (key >= low && key <= high) {
-                if (!callback(*value)) return;
-            }
-        }
+        rangeBy(low, high, timeToRecord, callback);
     }
 
     template <typename Callback>
     void RangeByKarma(int low, int high, Callback callback) const
     {
-        for (auto& [key, value] : karmaToRecord)
-        {
-            if (key >= low && key <= high) {
-                if (!callback(*value)) return;
-            }
-        }
-
+        rangeBy(low, high, karmaToRecord, callback);
     }
 
     template <typename Callback>
     void AllByUser(const string& user, Callback callback) const
     {
-        for (auto& [key, value] : usernameToRecord)
-        {
-            if (key == user) {
-                if (!callback(*value)) return;
-            }
-        }
-
+        rangeBy(user, user, usernameToRecord, callback);
     }
 
 private:
@@ -101,13 +84,23 @@ private:
     unordered_map<string, Record> base;
    
     template<typename Collection, typename K>
-    void eraseInSecondary(K key, Collection& c, const string& id) 
+    void eraseInSecondary(K& key, Collection& c, const string& id) 
     {
         auto it = c.lower_bound(key);
         while(it->second->id != id) {
             it++;
         }
         c.erase(it); 
+    }
+
+    template<typename Collection, typename Key, typename Callback>
+    void rangeBy(Key& lowerBound, Key& upperBound, Collection& c, Callback callback) const
+    {
+        auto lowerIt = c.lower_bound(lowerBound);
+        auto upperIt = c.upper_bound(upperBound);
+        for (; lowerIt != upperIt; lowerIt++) {
+            if(!callback((*lowerIt->second))) return;
+        }
     }
 };
 
