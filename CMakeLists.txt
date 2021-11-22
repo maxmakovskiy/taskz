@@ -109,5 +109,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("person_to_h_set")
 #add_subdirectory("hash_table")
 #add_subdirectory("secondary_index")
+#add_subdirectory("spending_money")
 
-add_subdirectory("spending_money")
+add_subdirectory("spending_money_xml")
