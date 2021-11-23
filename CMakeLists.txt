@@ -111,5 +111,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("secondary_index")
 #add_subdirectory("spending_money")
 #add_subdirectory("spending_money_xml")
+#add_subdirectory("ini_lib")
 
-add_subdirectory("ini_lib")
+add_subdirectory("dispatching")
