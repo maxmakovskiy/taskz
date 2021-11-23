@@ -10,11 +10,6 @@ geo2d::Point Unit::GetPosition() const
     return p;
 }
 
-bool Unit::Collide(const GameObject& that) const
-{
-    return that.CollideWith(*this);  
-}
-
 bool Unit::CollideWith(const Unit& that) const
 {
     return geo2d::Collide(p, that.GetPosition());
@@ -44,11 +39,6 @@ Building::Building(geo2d::Rectangle geometry)
 geo2d::Rectangle Building::GetPosition() const
 {
     return rect;
-}
-
-bool Building::Collide(const GameObject& that) const
-{
-    return that.CollideWith(*this);  
 }
 
 bool Building::CollideWith(const Unit& that) const
@@ -81,11 +71,6 @@ geo2d::Circle Tower::GetPosition() const
     return circle;
 }
 
-bool Tower::Collide(const GameObject& that) const
-{
-    return that.CollideWith(*this);  
-}
-
 bool Tower::CollideWith(const Unit& that) const
 {
     return geo2d::Collide(circle, that.GetPosition());
@@ -114,11 +99,6 @@ Fence::Fence(geo2d::Segment geometry)
 geo2d::Segment Fence::GetPosition() const
 {
     return segment;
-}
-
-bool Fence::Collide(const GameObject& that) const
-{
-    return that.CollideWith(*this);  
 }
 
 bool Fence::CollideWith(const Unit& that) const
