@@ -11,31 +11,26 @@ public:
     {
     }
 
-    struct Access1 
+    template <typename U>
+    struct Access 
     {
         std::lock_guard<std::mutex> guard;
-        T& ref_to_value;
+        U& ref_to_value;
     };
 
-    struct Access2 
-    {
-        std::lock_guard<std::mutex> guard;
-        const T& ref_to_value;
-    };
-
-    Access1 GetAccess()
+    Access<T> GetAccess()
     {
         return {std::lock_guard<std::mutex>(m), value};
     }
 
-    Access2 GetAccess() const
+    Access<const T> GetAccess() const
     {
         return {std::lock_guard<std::mutex>(m), value};
     }
 
 private:
     T value;
-    std::mutex m;
+    mutable std::mutex m;
 
 };
 
