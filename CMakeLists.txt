@@ -114,5 +114,6 @@ set(CMAKE_CSS_FLAGS_RELEASE "-O2")
 #add_subdirectory("ini_lib")
 #add_subdirectory("dispatching")
 #add_subdirectory("comments_server")
+#add_subdirectory("sync_2")
 
-add_subdirectory("sync_2")
+add_subdirectory("lazy_value")
