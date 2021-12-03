@@ -21,13 +21,10 @@ public:
     virtual ~Worker() = default;
     virtual void Process(std::unique_ptr<Email> email) = 0;
     virtual void Run() {
-        // только первому worker-у в пайплайне нужно это имплементировать
         throw std::logic_error("Unimplemented");
     }
 
 protected:
-    // реализации должны вызывать PassOn, чтобы передать объект дальше
-    // по цепочке обработчиков
     void PassOn(std::unique_ptr<Email> email) const
     {
         if (nextWorker) {
@@ -164,41 +161,35 @@ private:
 };
 
 
-// реализуйте класс
 class PipelineBuilder 
 {
 public:
-    // добавляет в качестве первого обработчика Reader
     explicit PipelineBuilder(std::istream& in)
     {
         workers.push_back(std::make_unique<Reader>(in));
     }
 
-    // добавляет новый обработчик Filter
     PipelineBuilder& FilterBy(Filter::Function filter)
     {
         workers.push_back(std::make_unique<Filter>(filter));
         return *this;
     }
 
-    // добавляет новый обработчик Copier
     PipelineBuilder& CopyTo(std::string recipient)
     {
         workers.push_back(std::make_unique<Copier>(recipient));
         return *this;
     }
 
-    // добавляет новый обработчик Sender
     PipelineBuilder& Send(std::ostream& out)
     {
         workers.push_back(std::make_unique<Sender>(out));
         return *this;
     }
 
-    // возвращает готовую цепочку обработчиков
     std::unique_ptr<Worker> Build()
     {
-        // propage through workers SetNext 
+        // propage through all workers SetNext 
         for (int i = workers.size() - 2; i >= 0; --i)
         {
             workers[i]->SetNext(std::move(workers[i+1]));
