@@ -1,0 +1,3 @@
+The class template basic_ifstream implements high-level input operations on file-based streams.
+It interfaces a file-based streambuffer (std::basic_filebuf) with the high-level interface of (std::basic_istream).
+A typical implementation of std::basic_ifstream holds only one non-derived data member: an instance of std::basic_filebuf<CharT, Traits>. 
