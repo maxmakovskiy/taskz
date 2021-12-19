@@ -3,6 +3,16 @@
 #include <filesystem>
 #include <string>
 
+// take all headers files from manager.h and check what the problem
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <malloc.h>
+#include <cstring>
+#include <unistd.h>
+#include "../../../sniffer/network_counter/manager.h"
+
+
+
 namespace fs = std::filesystem;
 
 int main(int argc, char** argv)
